@@ -1,4 +1,7 @@
 # -*- coding: utf-8 -*-
+import pygame;
+
+pygame.init();
 #Dieses Modul wird ein paar konstante Werte für das Spiel beinhalten.
 
 #Die Dimensionen des Bildschirmes
@@ -40,6 +43,14 @@ START_JUMPS = 50;
 
 #Minimale Bewegungsgeschwindigkeit
 MIN_MOVEMENT_SPEED = 5;
+
+#Konstante FPS Delays für Millisekunden
+DELAY=0.01;
+
+#Statische Geräusche
+PLAYER_JUMP_SOUND = pygame.mixer.Sound("models/game/sounds/jump.wav");
+PLAYER_JUMP_SOUND.set_volume(0.04);
+
 
 #Die Farben Klasse
 class colors: 

@@ -17,7 +17,6 @@ class gamestate:
     EXPLAIN = 6;
 
 #Wenn dies True ist, wird das Pausenmenü blockiert. (Hilfreich für die render annimation beim Tod)
-
 block_pause = False;
 
 #Solange diese auf True ist, wird das Spiel laufen.

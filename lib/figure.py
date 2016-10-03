@@ -2,14 +2,13 @@
 import render, constants;
 
 class figure:
-    ###Kommentiert###
+       ###Kommentiert###
     imgs, pos, frame, isJumping, y, x, yVel, canJump = [], 0, 1, False, constants.Y_FLOOR, constants.PLAYER_X, 0, True;
+    
     def jump(self):
         if not self.isJumping and self.canJump and render.jumpsLeft >=1:
                 if render.settings.sounds_enabled:
-                    sound = render.pygame.mixer.Sound("models/game/sounds/jump.wav");
-                    sound.set_volume(0.04);
-                    sound.play();
+                    render.pygame.mixer.Sound.play(constants.PLAYER_JUMP_SOUND);
                 self.yVel = -25;
                 self.isJumping = True;
                 render.jumpsLeft -=1;
@@ -68,5 +67,7 @@ class figure:
         if self.x+render.RESIZE_PLAYER[0]-10 > render.WIDTH:
             return False;
         return True;
+        
     def __init__(self, pics):
         self.imgs = pics;
+ 

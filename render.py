@@ -1,6 +1,6 @@
 # -*- coding: cp1252 -*-
 #Dieses Modul beihnaltet alle Methoden, um Grafiken/Farben im Spiel zu rendern
-import pygame, random, main, counter, sys, settings, items;
+import pygame, random, main, counter, sys, settings, items, time;
 from constants import *;
 
 ##From http://stackoverflow.com/questions/67631/how-to-import-a-module-given-the-full-path##
@@ -14,6 +14,8 @@ intern_object = None;
 
 #Übrig gebliebene Sprünge im Spiel.
 jumpsLeft = START_JUMPS;
+
+lastTickedUNIXMillis = time.time();
 
 
 #Checke, ob das Spiel nicht von alleine gestartet wird.
@@ -111,7 +113,7 @@ class object_moving:
         return True;
 ###Ende Kommentiert###
 
-###Kommentiert###    
+###Kommentiert###
 pics, path = [],  "models/player";
 for i in range(1,5):   
     pics.append(pygame.transform.scale(pygame.image.load(path+"/Move"+str(i)+".png"),RESIZE_PLAYER));
@@ -196,34 +198,36 @@ def renderJumps(screen):
     screen.blit(text, (5,20));
 
 def render():
-    global fig, FPS;
-    pygame.display.set_icon(pygame.image.load("models/game/icon.png"));
-    palette = colors();
-    ###Kommentiert###
-    clock.tick(FPS);
-    screen = pygame.display.get_surface();
-    screen.fill(palette.BLACK);
-    
-    ###Kommentiert###
-    background1.move(screen);
-    background2.moveEach = movement_speed;
-    background2.move(screen);
-    ###Ende Kommentiert###
+    global fig, lastTickedUNIXMillis;
+    if lastTickedUNIXMillis+DELAY<time.time():
+        lastTickedUNIXMillis = time.time();
+        pygame.display.set_icon(pygame.image.load("models/game/icon.png"));
+        palette = colors();
+        ###Kommentiert###
+        #clock.tick(FPS);
+        screen = pygame.display.get_surface();
+        screen.fill(palette.BLACK);
+        
+        ###Kommentiert###
+        background1.move(screen);
+        background2.moveEach = movement_speed;
+        background2.move(screen);
+        ###Ende Kommentiert###
 
-    if checkForXCol(fig) and not checkForYCol(fig):
-       fig.x -=movement_speed;
-    fig.move(screen, False);
-    
-    #Bewegliche Objekte#
-    renderObjects(screen);
-    items.moveItem(screen);
-    items.displayPossibleItems(screen);
-    #Ende Bewegliche Objekte#
-    
-    showTime(screen);
-    renderJumps(screen);
-    #debugFPS(screen);
-    pygame.display.flip();
+        if checkForXCol(fig) and not checkForYCol(fig):
+           fig.x -=movement_speed;
+        fig.move(screen, False);
+        
+        #Bewegliche Objekte#
+        renderObjects(screen);
+        items.moveItem(screen);
+        items.displayPossibleItems(screen);
+        #Ende Bewegliche Objekte#
+        
+        showTime(screen);
+        renderJumps(screen);
+        #debugFPS(screen);
+        pygame.display.flip();
 
 def resetVars():
     global sett, fps_font, movement_speed, clock, pics, path, fig, background1, background2, objects, intern_object, jumpsLeft, START_JUMPS, RESIZE_PLAYER;
