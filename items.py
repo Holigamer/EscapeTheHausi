@@ -118,7 +118,8 @@ def displayPossibleItems(screen):
     background.fill((0,0,0));
     mark.fill((0,0,0));
     background.set_alpha(50);
-    mark.set_alpha(50);
+    mark.fill((255,0,0));
+    mark.set_alpha(100);
     screen.blit(background, (WIDTH-100, 0));
     for i in range(3):
         if chosen_item==i:
